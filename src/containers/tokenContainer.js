@@ -1,5 +1,4 @@
 import React from 'react';
-import onClickOutside from 'react-onclickoutside';
 
 import {getDisplayName} from '../utils/';
 import {BACKSPACE} from '../constants/keyCode';
@@ -69,7 +68,7 @@ const tokenContainer = (Component) => {
 
   WrappedComponent.displayName = `TokenContainer(${getDisplayName(Component)})`;
 
-  return onClickOutside(WrappedComponent);
+  return WrappedComponent;
 };
 
 export default tokenContainer;

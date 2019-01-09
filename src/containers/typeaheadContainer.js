@@ -1,6 +1,5 @@
 import {flowRight, head, isEqual, noop, uniqueId} from 'lodash';
 import PropTypes from 'prop-types';
-import onClickOutside from 'react-onclickoutside';
 import React from 'react';
 
 import highlightOnlyResultContainer from './highlightOnlyResultContainer';
@@ -677,7 +676,7 @@ function typeaheadContainer(Typeahead) {
     onMenuItemClick: PropTypes.func.isRequired,
   };
 
-  return onClickOutside(WrappedTypeahead);
+  return WrappedTypeahead;
 }
 
 export default typeaheadContainer;

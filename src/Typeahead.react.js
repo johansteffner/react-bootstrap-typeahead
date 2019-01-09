@@ -2,7 +2,6 @@ import cx from 'classnames';
 import {pick} from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {findDOMNode} from 'react-dom';
 
 import ClearButton from './ClearButton.react';
 import Loader from './Loader.react';
@@ -15,6 +14,11 @@ import typeaheadContainer from './containers/typeaheadContainer';
 import {getAccessibilityStatus, preventInputBlur} from './utils/';
 
 class Typeahead extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.referenceElement = React.createRef();
+  }
   componentWillReceiveProps(nextProps) {
     const {allowNew, onInitialItemChange, results} = nextProps;
 
@@ -91,17 +95,14 @@ class Typeahead extends React.Component {
         tabIndex={-1}>
         {this._renderInput({
           ...inputProps,
-          // Use `findDOMNode` here since it's easier and less fragile than
-          // forwarding refs down to the input's container.
-          // TODO: Consider using `forwardRef` when React 16.3 usage is higher.
-          ref: (node) => this._inputContainer = findDOMNode(node),
+          ref: this.referenceElement,
         })}
         {typeof children === 'function' ? children(this.props) : children}
         {auxContent}
         <Overlay
           {...overlayProps}
           container={bodyContainer ? document.body : this}
-          referenceElement={this._inputContainer}
+          referenceElement={this.referenceElement.current}
           show={isMenuShown}>
           {renderMenu(results, {...menuProps, id: menuId})}
         </Overlay>
